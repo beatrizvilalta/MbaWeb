@@ -8,8 +8,8 @@
                      <UserCard :user="user" />
                 </div>
             </div>
-        </div> 
-        
+        </div>
+
     </div>
 </template>
 
