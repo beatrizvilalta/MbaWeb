@@ -2,7 +2,7 @@
     <nav class="navbar has-shadow is-white" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="#">
-                <h2 id="name"> Carina Monteiro </h2>
+                <h2 id="name"> Finanças </h2>
             </a>
 
             <a class="navbar-burger"  @click="toggleBurgerMenu">
