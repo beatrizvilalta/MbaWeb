@@ -36,3 +36,9 @@ export default {
 <style>
 
 </style>
+
+// tags:
+// is-primary: Em dia
+// is-info: Isento
+// is-danger: Débito
+// is-warning: Em acordo
