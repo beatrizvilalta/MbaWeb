@@ -5,7 +5,7 @@
             <input class="input" v-model="search" type="search" placeholder="Digite o nome...">
             <div class="container">
                 <div v-for="(user, index) in filterUsers " :key="index"> 
-                     <UserCard :username="user" /> 
+                     <UserCard :user="user" /> 
                 </div>
             </div>
         </div> 
@@ -27,15 +27,17 @@ export default {
     return {
         search: '',
         users: [
-            "Beatriz Vilalta",
-            "Gabriel Rosa",
-            "Carina Monteiro",
-            "Kiko Caminha",
-            "Aovinho",
-            "Juan Carlos",
-            "Keila Missue",
-            "Cayo Raphael",
-            "Ana Beatriz Caldas de Oliveira Fernandes"
+            {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" },
+            {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" },
+            {id: 2, name: 'Carina de Oliveira Monteiro ', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },            
+            {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" },
+            {id: 4, name: 'Alvaro dos Santos', situation: 1, is_active: true, is_associated: true, instrument: "Caixa" },
+            {id: 5, name: 'Juan Carlos Vilalta Jimenez', situation: 22, is_active: true, is_associated: false, instrument: "Caixa" },
+            {id: 6, name: 'Keila Missue Shimizu Cabral', situation: 3, is_active: true, is_associated: true, instrument: "Caixa" },
+            {id: 7, name: 'Cayo Raphael da Rocha Lima', situation: 1, is_active: true, is_associated: false, instrument: "Gonguê" },
+            {id: 8, name: 'Ana Beatriz Caldas de Oliveira Fernandes', situation: 1, is_active: true, is_associated: false, instrument: "Agbe" },
+            {id: 9, name: 'Marco Tulio Costa Tenório Cavalcanti', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
+            {id: 10, name: 'Daniel Moura Soares', situation: 23, is_active: true, is_associated: true, instrument: "Alfaia" }
         ]
     }
   },
@@ -45,7 +47,7 @@ export default {
 
           if (!searchRestult) return this.users;
 
-          return this.users.filter(c => c.toLowerCase().indexOf(searchRestult) > -1);
+          return this.users.filter(c => c.name.toLowerCase().indexOf(searchRestult) > -1);
       }
   },
   methods: {

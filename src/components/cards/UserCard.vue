@@ -1,44 +1,56 @@
 <template>
-    <div class="card">
+    <div class="card" v-bind:class="cardBackground">
         <header class="card-header">
             <p class="card-header-title">
-                {{ username }}
+                {{ user.name }}
             </p>
             
             <div class="card-header-icon">
-                <span class="tag is-success">Em dia</span>
+                <SituationTag :situation="user.situation" />                
             </div>
         </header>
 
         <div class="card-content">
-            <div class="content">      
-                <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>        
+            <div class="content"> 
+                <p class="has-text-left has-text-weight-semibold">{{ user.is_associated ? 'Sócio' : 'Colaborador' }}</p>                 
+                <p class="has-text-left">Situação: {{ this.user.is_active ? 'Ativo' : 'Afastado' }}</p>                 
+                <p class="has-text-left"> Ala: {{ user.instrument }} </p>
+
+                <div class="card-footer">                    
+                    <p class="has-text-left has-text-weight-light is-size-7 mt-2">Ultimo pagamento - 1 Jan 2017</p> 
+                </div>
+                
+            </div>            
+        </div>
     </div>
 </template>
 
 <script>
+import SituationTag from '../SituationTag.vue'
+
 export default {
+  components: { SituationTag },
     props: {
-        username: String
+        user: Object
     },
     data() {
         return {
 
         }
     },
+    computed: {
+        cardBackground: function() {            
+            return this.user.is_active ? 
+            'has-background-white' 
+            : 
+            'has-background-grey-lighter'
+        }
+    }
 }
 </script>
 
 <style>
-
+.card-header-icon {
+    cursor: auto;
+}
 </style>
-
-// tags:
-// is-primary: Em dia
-// is-info: Isento
-// is-danger: Débito
-// is-warning: Em acordo
