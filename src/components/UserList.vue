@@ -64,9 +64,3 @@ export default {
     margin-top: 1.5em;
 }
 </style>
-
-
-// <div class="control">
-//                     Ano de competência 
-//                     <select> <option> 2020 </option> <option> 2021 </option> </select>   
-//                     </div>
