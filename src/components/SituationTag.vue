@@ -9,20 +9,24 @@ export default {
     },        
     computed: {
         situationClass: function() {
-            if (this.situation == 1) return 'is-primary'
-            if (this.situation == 2) return 'is-info'
-            if (this.situation == 3) return 'is-warning'
-            if (this.situation == 4) return 'is-danger'
-            
-            return ''
+            const situationClassMap = new Map();
+            situationClassMap.set(1, 'is-primary');
+            situationClassMap.set(2, 'is-info');
+            situationClassMap.set(3, 'is-warning');
+            situationClassMap.set(4, 'is-danger');
+
+            return situationClassMap.get(this.situation)
         },
         situationText: function() {
-            if (this.situation == 1) return 'Em dia'
-            if (this.situation == 2) return 'Isento'
-            if (this.situation == 3) return 'Acordo'
-            if (this.situation == 4) return 'Débito'
-            
-            return 'Indefinido'
+            const situationTextsMap = new Map();
+            situationTextsMap.set(1, 'Em dia');
+            situationTextsMap.set(2, 'Isento');
+            situationTextsMap.set(3, 'Acordo');
+            situationTextsMap.set(4, 'Débito');
+
+            const resultText = situationTextsMap.get(this.situation)
+
+            return resultText == null ? 'Indefinido' : resultText
         }
     }
 }
