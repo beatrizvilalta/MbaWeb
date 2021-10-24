@@ -4,12 +4,12 @@
         <div class="notification is-white">
             <input class="input" v-model="search" type="search" placeholder="Digite o nome...">
             <div class="container">
-                <div v-for="(user, index) in filterUsers " :key="index"> 
-                     <UserCard :user="user" /> 
+                <div v-for="(user, index) in filterUsers " :key="index">
+                     <UserCard :user="user" />
                 </div>
             </div>
-        </div> 
-        
+        </div>
+
     </div>
 </template>
 
@@ -19,7 +19,7 @@ import Navbar from './Navbar.vue'
 import UserCard from './cards/UserCard.vue'
 
 export default {
-  components: { 
+  components: {
       Navbar,
       UserCard
     },
@@ -29,7 +29,7 @@ export default {
         users: [
             {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" },
             {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" },
-            {id: 2, name: 'Carina de Oliveira Monteiro ', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },            
+            {id: 2, name: 'Carina de Oliveira Monteiro ', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
             {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" },
             {id: 4, name: 'Alvaro dos Santos', situation: 1, is_active: true, is_associated: true, instrument: "Caixa" },
             {id: 5, name: 'Juan Carlos Vilalta Jimenez', situation: 22, is_active: true, is_associated: false, instrument: "Caixa" },
@@ -64,9 +64,3 @@ export default {
     margin-top: 1.5em;
 }
 </style>
-
-
-// <div class="control">
-//                     Ano de competência 
-//                     <select> <option> 2020 </option> <option> 2021 </option> </select>   
-//                     </div>
