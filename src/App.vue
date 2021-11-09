@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <UserDetail :userId="1"/>
+    <Login />
   </div>
 </template>
 
 <script>
-import UserDetail from './components/UserDetail.vue'
+import Login from './views/Login.vue'
 
 export default {
   name: 'App',
   components: {
-    UserDetail
+    Login
   }
 }
 </script>

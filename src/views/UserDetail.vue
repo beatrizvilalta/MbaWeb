@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import Navbar from './Navbar.vue'
-import ConfimationModal from './modal/ConfirmationModal.vue'
+import Navbar from '../components/Navbar.vue'
+import ConfimationModal from '../components/modal/ConfirmationModal.vue'
 
 export default {
     props: {

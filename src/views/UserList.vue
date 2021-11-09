@@ -15,8 +15,8 @@
 
 <script>
 
-import Navbar from './Navbar.vue'
-import UserCard from './cards/UserCard.vue'
+import Navbar from '../components/Navbar.vue'
+import UserCard from '../components/cards/UserCard.vue'
 
 export default {
   components: {
