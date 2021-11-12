@@ -1,28 +1,30 @@
 <template>
   <div class="hero">
-    <div class="hero-body">      
-      <div class="box">
-        <img src="@/assets/images/logoBaque.png">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column is-4-widescreen">
+          <div class="box">
+            <img src="@/assets/images/logoBaque.png">
 
-        <div class="title has-text-grey is-5">Login</div>
+            <div class="title has-text-grey is-5">Login</div>
+            <form>
+              <div class="field">
+                <div class="control">
+                 <input class="input is-large" type="email" placeholder="Email" autofocus="">
+                </div>
+              </div>
 
-        <form>
-          <div class="field">
-            <div class="control">
-              <input class="input is-large" type="email" placeholder="Email" autofocus="">
-            </div>
+              <div class="field">
+                <div class="control">
+                  <input class="input is-large" type="password" placeholder="Senha">
+                </div>
+              </div>
+              <br>
+
+              <button class="button is-block is-danger is-large is-fullwidth" @click="login()">Login</button>
+            </form>
           </div>
-
-          <div class="field">
-            <div class="control">
-              <input class="input is-large" type="password" placeholder="Senha">
-            </div>
-          </div>
-
-          <br>
-
-          <button class="button is-block is-danger is-large is-fullwidth" @click="login()">Login</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -40,7 +42,7 @@ export default {
   },
   methods: {
     login() {
-      this.$router.push({ path: '/userDetail'} );
+      this.$router.push({ name: 'UserList'} );
     }
   }
 }

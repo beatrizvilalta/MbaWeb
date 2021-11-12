@@ -19,7 +19,7 @@ const routes = [
     component: UserList
   },
   {
-    path: '/userDetail',
+    path: '/userDetail/:id',
     name: 'UserDetail',
     component: UserDetail
   }
@@ -27,7 +27,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: 'http://localhost:8080/',
   routes
 })
 

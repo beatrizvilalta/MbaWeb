@@ -9,7 +9,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -23,22 +22,17 @@ export default {
       Navbar,
       UserCard
     },
+  created () {
+      console.log("Created")
+      this.fetchUsers()
+  },
+  watch: {
+    '$route': 'fetchUsers'
+  },
   data() {
     return {
         search: '',
-        users: [
-            {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" },
-            {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" },
-            {id: 2, name: 'Carina de Oliveira Monteiro ', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
-            {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" },
-            {id: 4, name: 'Alvaro dos Santos', situation: 1, is_active: true, is_associated: true, instrument: "Caixa" },
-            {id: 5, name: 'Juan Carlos Vilalta Jimenez', situation: 22, is_active: true, is_associated: false, instrument: "Caixa" },
-            {id: 6, name: 'Keila Missue Shimizu Cabral', situation: 3, is_active: true, is_associated: true, instrument: "Caixa" },
-            {id: 7, name: 'Cayo Raphael da Rocha Lima', situation: 1, is_active: true, is_associated: false, instrument: "Gonguê" },
-            {id: 8, name: 'Ana Beatriz Caldas de Oliveira Fernandes', situation: 1, is_active: true, is_associated: false, instrument: "Agbe" },
-            {id: 9, name: 'Marco Tulio Costa Tenório Cavalcanti', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
-            {id: 10, name: 'Daniel Moura Soares', situation: 23, is_active: true, is_associated: true, instrument: "Alfaia" }
-        ]
+        users: []
     }
   },
   computed: {
@@ -51,7 +45,21 @@ export default {
       }
   },
   methods: {
-
+      fetchUsers() {
+          this.users = [
+            {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" },
+            {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" },
+            {id: 2, name: 'Carina de Oliveira Monteiro ', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
+            {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" },
+            {id: 4, name: 'Alvaro dos Santos', situation: 1, is_active: true, is_associated: true, instrument: "Caixa" },
+            {id: 5, name: 'Juan Carlos Vilalta Jimenez', situation: 22, is_active: true, is_associated: false, instrument: "Caixa" },
+            {id: 6, name: 'Keila Missue Shimizu Cabral', situation: 3, is_active: true, is_associated: true, instrument: "Caixa" },
+            {id: 7, name: 'Cayo Raphael da Rocha Lima', situation: 1, is_active: true, is_associated: false, instrument: "Gonguê" },
+            {id: 8, name: 'Ana Beatriz Caldas de Oliveira Fernandes', situation: 1, is_active: true, is_associated: false, instrument: "Agbe" },
+            {id: 9, name: 'Marco Tulio Costa Tenório Cavalcanti', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" },
+            {id: 10, name: 'Daniel Moura Soares', situation: 23, is_active: true, is_associated: true, instrument: "Alfaia" }
+        ]
+      }
   }
 }
 </script>

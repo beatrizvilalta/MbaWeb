@@ -3,14 +3,14 @@
         <Navbar />
 
         <div class="mt-4 ml-4 has-text-left">
-            <p class="title is-size-5"> Gabriel Rosa do Nascimento   </p>                
-            <p class="subtitle mb-2">Situação fiscal: <span class="has-text-success"> Em dia </span> </p>            
+            <p class="title is-size-5"> {{ user.name }}</p>
+            <p class="subtitle mb-2">Situação fiscal: <span class= "has-text-weight-bold" v-bind:class="situationClass"> {{ situationText }} </span> </p>
             <p >
-                Colaborador
+                {{ associatedText }}
                 <br>
-                Membro ativo
+                {{ activeText }}
                 <br>
-                Ala: caixa
+                Ala: {{ user.instrument }}
             </p>
         </div>
          
@@ -55,31 +55,23 @@ import Navbar from '../components/Navbar.vue'
 import ConfimationModal from '../components/modal/ConfirmationModal.vue'
 
 export default {
-    props: {
-        userId: Number
-    },
     components: { 
         Navbar,
         ConfimationModal
     },
+    mounted () {
+        window.scrollTo(0,0);
+    },
+    created () {
+        this.fetchUser()
+    },
     data() {
         return {
+            user: {},
             is_admin: true,
             showDialog: false,
             selectedPayment: {},
-            paymentList: [
-                {id: 0, reference_date: 'Nov 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 1, reference_date: 'Out 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 2, reference_date: 'Set 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 3, reference_date: 'Ago 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 4, reference_date: 'Jul 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 5, reference_date: 'Jun 2021', value: 'R$ 15,00', observation: 'Pagou R$ 60,00 correspondente aos anteriores e foi compensado' },
-                {id: 6, reference_date: 'Mai 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 7, reference_date: 'Abr 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 8, reference_date: 'Mar 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 9, reference_date: 'Fev 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 10, reference_date: 'Jan 2021', value: 'R$ 15,00', observation: '-' },
-            ]
+            paymentList: []
         }
     },
     computed: {
@@ -97,9 +89,63 @@ export default {
             'is-active' 
             : 
             ''
+        },
+        situationClass: function() {
+            const situationClassMap = new Map();
+            situationClassMap.set(1, 'has-text-success');
+            situationClassMap.set(2, 'has-text-info');
+            situationClassMap.set(3, 'has-text-warning');
+            situationClassMap.set(4, 'has-text-danger');
+
+            return situationClassMap.get(this.user.situation)
+        },
+        situationText: function() {
+            const situationTextsMap = new Map();
+            situationTextsMap.set(1, 'Em dia');
+            situationTextsMap.set(2, 'Isento');
+            situationTextsMap.set(3, 'Acordo');
+            situationTextsMap.set(4, 'Débito');
+
+            const resultText = situationTextsMap.get(this.user.situation)
+
+            return resultText == null ? 'Indefinido' : resultText
+        },
+        activeText: function() {
+            return this.user.is_active ? 'Membro ativo' : 'Membro afastado'
+        },
+        associatedText: function() {
+            return this.user.is_associated ? 'Sócio' : 'Colaborador'
         }
     },
     methods: {
+        fetchUser() {
+            if (this.$route.params.id == 3) {
+                this.user = {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" }
+            } else if (this.$route.params.id == 1) {
+                this.user = {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" }
+            } else if (this.$route.params.id == 9) {
+                this.user = {id: 9, name: 'Marco Tulio Costa Tenório Cavalcanti', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" }
+            } else {
+                this.user = {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" }
+            }
+
+            this.fetchPaymentsByUser()
+        },
+        fetchPaymentsByUser() {
+            this.paymentList = [
+                {id: 0, reference_date: 'Nov 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 1, reference_date: 'Out 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 2, reference_date: 'Set 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 3, reference_date: 'Ago 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 4, reference_date: 'Jul 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 5, reference_date: 'Jun 2021', value: 'R$ 15,00', observation: 'Pagou R$ 60,00 correspondente aos anteriores e foi compensado' },
+                {id: 6, reference_date: 'Mai 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 7, reference_date: 'Abr 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 8, reference_date: 'Mar 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 9, reference_date: 'Fev 2021', value: 'R$ 15,00', observation: '-' },
+                {id: 10, reference_date: 'Jan 2021', value: 'R$ 15,00', observation: '-' },
+            ]
+        },
         cancelDialog() {
             this.showDialog = false
             this.selectedPayment = {}

@@ -21,7 +21,7 @@
 
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <a class="button is-danger is-outlined" href="#1">
+                    <a class="button is-danger is-outlined" @click="logout">
                         Logout
                     </a>
                 </div>
@@ -44,6 +44,9 @@ export default {
             .querySelector('#nav-links')
             .classList
             .toggle('is-active')
+        },
+        logout() {
+            this.$router.push({ name: 'Login'} );
         }
   }
 }
