@@ -33,28 +33,40 @@
                         <td class="is-vcentered width-limit"> {{ payment.observation }} </td>
                         <td class="is-vcentered" v-bind:class="adminVisibility">
                             <button class="button is-small is-outlined is-info m-1"> Editar </button>
-                            <button class="button is-small is-outlined is-danger m-1"> Deletar </button>
+                            <button class="button is-small is-outlined is-danger m-1" @click="deleteDidPress(payment)"> Deletar </button>
                         </td>
                     </tr>
                 </tbody>
             </table>            
-        </div>          
+        </div>      
+
+        <ConfimationModal :show="showDialog"                
+                title="Delete a task?"
+                :cancelAction="cancelDialog"
+                :deleteAction="confirmDelete"
+                :paymentModel="this.selectedPayment"
+                description="Are you sure you want to delete this task?"
+                v-bind:class="displayDialog"/>   
     </div>    
 </template>
 
 <script>
 import Navbar from './Navbar.vue'
+import ConfimationModal from './modal/ConfirmationModal.vue'
 
 export default {
     props: {
         userId: Number
     },
     components: { 
-        Navbar
+        Navbar,
+        ConfimationModal
     },
     data() {
         return {
             is_admin: true,
+            showDialog: false,
+            selectedPayment: {},
             paymentList: [
                 {id: 0, reference_date: 'Nov 2021', value: 'R$ 15,00', observation: '-' },
                 {id: 1, reference_date: 'Out 2021', value: 'R$ 15,00', observation: '-' },
@@ -76,9 +88,31 @@ export default {
             '' 
             : 
             'is-hidden'
-        }        
+        },
+        hideDialog: function() {
+            return ''
+        },
+        displayDialog: function() {
+            return this.showDialog ?
+            'is-active' 
+            : 
+            ''
+        }
     },
-    methods: {}
+    methods: {
+        cancelDialog() {
+            this.showDialog = false
+            this.selectedPayment = {}
+        },
+        confirmDelete() {
+            console.log("Deletou o ")
+            console.log(this.selectedPayment)
+        },
+        deleteDidPress(payment) {
+            this.selectedPayment = payment
+            this.showDialog = true
+        }
+    }
 }
 </script>
 
