@@ -1,17 +1,14 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <UserDetail :userId="1"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import UserDetail from './components/UserDetail.vue'
 
 export default {
   name: 'App',
   components: {
-    UserDetail
   }
 }
 </script>

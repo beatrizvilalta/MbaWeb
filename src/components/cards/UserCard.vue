@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-bind:class="cardBackground">
+    <div class="card" v-bind:class="cardBackground" @click="selectUser">
         <header class="card-header">
             <p class="card-header-title">
                 {{ user.name }}
@@ -44,6 +44,11 @@ export default {
             'has-background-white'
             :
             'has-background-grey-lighter'
+        }
+    },
+    methods: {
+        selectUser() {
+            this.$router.push({ name: 'UserDetail', params: { id: this.user.id }} );
         }
     }
 }
