@@ -25,10 +25,14 @@ const routes = [
     component: UserDetail
   },
   {
-    path: '/paymentForm/:userId',
-    name: 'PaymentForm',
-    component: PaymentForm,
-    props: true
+    path: '/paymentForm',
+    name: 'AddPayment',
+    component: PaymentForm
+  },
+  {
+    path: '/paymentForm/:paymentId',
+    name: 'EditPayment',
+    component: PaymentForm
   }
 ]
 

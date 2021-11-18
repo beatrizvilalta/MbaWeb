@@ -57,10 +57,11 @@ export default {
         },
         addPaymentAction() {
             if (this.userId != null) {
-                this.$router.push({ name: 'PaymentForm', params: { userId: this.userId }});
+                this.$router.push({ name: 'AddPayment'});
             }
         },
         logout() {
+            this.$session.destroy()
             this.$router.push({ name: 'Login'} );
       }
     },

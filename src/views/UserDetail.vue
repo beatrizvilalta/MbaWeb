@@ -155,7 +155,7 @@ export default {
             console.log(this.selectedPayment)
         },
         editDidPress(payment) {
-            this.$router.push({ name: 'PaymentForm', params: { userId: this.user.id, paymentId: payment.id }});
+            this.$router.push({ name: 'EditPayment', params: { paymentId: payment.id }});
         },
         deleteDidPress(payment) {
             this.selectedPayment = payment
