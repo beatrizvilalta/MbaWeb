@@ -1,6 +1,6 @@
 <template>
 <div class="hero">
-    <Navbar> </Navbar>
+    <Navbar/>
     <div class="hero-body p-5">
         <p class= "is-size-3"> {{ title }} </p>
         <div class="columns is-centered">

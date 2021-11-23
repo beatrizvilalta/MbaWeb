@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import UserList from '../views/UserList'
 import UserDetail from '../views/UserDetail'
 import PaymentForm from '../views/PaymentForm'
+import UserForm from '../views/UserForm'
 
 
 Vue.use(VueRouter)
@@ -33,6 +34,16 @@ const routes = [
     path: '/paymentForm/:paymentId',
     name: 'EditPayment',
     component: PaymentForm
+  },
+  {
+    path: '/userform',
+    name: 'AddUser',
+    component: UserForm
+  },
+  {
+    path: '/userform/:userId',
+    name: 'EditUser',
+    component: UserForm
   }
 ]
 

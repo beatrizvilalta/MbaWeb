@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :addPayment="isAdmin" :userId="user.id" />
+        <Navbar :addPayment="isAdmin" :userAction="isAdmin" :userId="user.id" />
 
         <div class="mt-4 ml-4 has-text-left">
             <p class="title is-size-5"> {{ user.name }}</p>

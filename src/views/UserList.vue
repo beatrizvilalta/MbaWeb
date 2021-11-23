@@ -1,6 +1,6 @@
 <template>        
     <div>
-        <Navbar />
+        <Navbar :userAction="isAdmin" />
         <div class="notification is-white">
             <input class="input" v-model="search" type="search" placeholder="Digite o nome...">
             <div class="container">
@@ -23,7 +23,6 @@ export default {
       UserCard
     },
   created () {
-      console.log("Created")
       this.fetchUsers()
   },
   watch: {
@@ -32,6 +31,7 @@ export default {
   data() {
     return {
         search: '',
+        isAdmin: true,
         users: []
     }
   },
