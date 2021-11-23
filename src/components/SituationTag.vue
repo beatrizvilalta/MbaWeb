@@ -6,7 +6,7 @@
 export default {
     props: {
         situation: Number
-    },        
+    },
     computed: {
         situationClass: function() {
             const situationClassMap = new Map();

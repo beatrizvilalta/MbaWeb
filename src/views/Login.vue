@@ -42,6 +42,8 @@ export default {
   },
   methods: {
     login() {
+      this.$session.start()
+      this.$session.set('userid', 1234)
       this.$router.push({ name: 'UserList'} );
     }
   }

@@ -11,7 +11,10 @@
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-router": "^3.5.3"
+    "vue-numeric": "^2.4.3",
+    "vue-router": "^3.5.3",
+    "vue-session": "^1.0.0",
+    "vue2-datepicker": "^3.10.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :addPayment="isAdmin" :userId="user.id" />
 
         <div class="mt-4 ml-4 has-text-left">
             <p class="title is-size-5"> {{ user.name }}</p>
@@ -32,7 +32,7 @@
                         <td class="is-vcentered">{{ payment.value }}</td>
                         <td class="is-vcentered width-limit"> {{ payment.observation }} </td>
                         <td class="is-vcentered" v-bind:class="adminVisibility">
-                            <button class="button is-small is-outlined is-info m-1"> Editar </button>
+                            <button class="button is-small is-outlined is-info m-1" @click="editDidPress(payment)"> Editar </button>
                             <button class="button is-small is-outlined is-danger m-1" @click="deleteDidPress(payment)"> Deletar </button>
                         </td>
                     </tr>
@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             user: {},
-            is_admin: true,
+            isAdmin: true,
             showDialog: false,
             selectedPayment: {},
             paymentList: []
@@ -76,7 +76,7 @@ export default {
     },
     computed: {
         adminVisibility: function() {
-            return this.is_admin ? 
+            return this.isAdmin ?
             '' 
             : 
             'is-hidden'
@@ -153,6 +153,9 @@ export default {
         confirmDelete() {
             console.log("Deletou o ")
             console.log(this.selectedPayment)
+        },
+        editDidPress(payment) {
+            this.$router.push({ name: 'EditPayment', params: { paymentId: payment.id }});
         },
         deleteDidPress(payment) {
             this.selectedPayment = payment

@@ -5,7 +5,7 @@
                 <h2 id="name"> Finanças </h2>
             </a>
 
-            <a class="navbar-burger"  @click="toggleBurgerMenu">
+            <a class="navbar-burger" @click="toggleBurgerMenu">
             <span></span>
             <span></span>
             <span></span>
@@ -20,6 +20,11 @@
             </div>
 
             <div class="navbar-end">
+                <div class="navbar-item" v-bind:class="adminAddPaymentClass">
+                    <a class="button is-info is-outlined" @click="addPaymentAction">
+                        Adicionar pagamento
+                    </a>
+                </div>
                 <div class="navbar-item">
                     <a class="button is-danger is-outlined" @click="logout">
                         Logout
@@ -33,11 +38,16 @@
 <script>
 
 export default {
+    props: {
+        addPayment: Boolean,
+        userId: Number
+    },
     Data() {
         return {
             
         }
     },
+    created () {},
     methods: {
         toggleBurgerMenu() {
             document
@@ -45,10 +55,24 @@ export default {
             .classList
             .toggle('is-active')
         },
+        addPaymentAction() {
+            if (this.userId != null) {
+                this.$router.push({ name: 'AddPayment'});
+            }
+        },
         logout() {
+            this.$session.destroy()
             this.$router.push({ name: 'Login'} );
+      }
+    },
+    computed: {
+        adminAddPaymentClass: function() {
+            return this.addPayment?
+            ''
+            :
+            'is-hidden'
         }
-  }
+    }
 }
 </script>
 
