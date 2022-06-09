@@ -10,10 +10,13 @@
   "dependencies": {
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
+    "picker": "^0.1.4",
+    "tar": "^6.1.11",
     "vue": "^2.6.11",
     "vue-numeric": "^2.4.3",
     "vue-router": "^3.5.3",
     "vue-session": "^1.0.0",
+    "vue-simple-search-dropdown": "^1.0.1",
     "vue2-datepicker": "^3.10.3"
   },
   "devDependencies": {
