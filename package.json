@@ -8,11 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.2.1",
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
+    "corns": "^0.0.0",
     "picker": "^0.1.4",
     "tar": "^6.1.11",
     "vue": "^2.6.11",
+    "vue-localstorage": "^0.6.2",
     "vue-numeric": "^2.4.3",
     "vue-router": "^3.5.3",
     "vue-session": "^1.0.0",

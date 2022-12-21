@@ -60,7 +60,6 @@ export default {
     },
     methods: {    
         setupView() {
-            // this.$session.get("userid")
             if (this.$route.params.paymentId == null) {
                 this.title = "Adicionar pagamento"
             } else {

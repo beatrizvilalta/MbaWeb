@@ -7,21 +7,21 @@
             <img src="@/assets/images/logoBaque.png">
 
             <div class="title has-text-grey is-5">Login</div>
-            <form>
+            <form @submit.prevent="login">
               <div class="field">
                 <div class="control">
-                 <input class="input is-large" type="email" placeholder="Email" autofocus="">
+                 <input class="input is-large" v-model="email" type="text" placeholder="Email" autofocus="">
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input is-large" type="password" placeholder="Senha">
+                  <input class="input is-large" v-model="password" type="password" placeholder="Senha">
                 </div>
               </div>
               <br>
 
-              <button class="button is-block is-danger is-large is-fullwidth" @click="login()">Login</button>
+              <button type="submit" class="button is-block is-danger is-large is-fullwidth">Login</button>
             </form>
           </div>
         </div>
@@ -32,7 +32,9 @@
 
 
 <script>
-export default {
+import axios from 'axios'
+
+export default {  
   data() {
     return {
       email: "",
@@ -40,11 +42,37 @@ export default {
       rememberMe: false
     };
   },
+  mounted() {
+    let userID = this.$localStorage.get('userid')
+    
+    if (userID) {
+      this.$router.push({ name: 'UserDetail'})
+    }
+  },
   methods: {
     login() {
-      this.$session.start()
-      this.$session.set('userid', 1234)
-      this.$router.push({ name: 'UserList'} );
+      let localStorage = this.$localStorage
+      console.log("request");
+      console.log(this.email);
+      axios.post('http://localhost:8080/api/user/signin', {
+        email: this.email,
+        password: this.password
+      })
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299) {
+          localStorage.set('userid', response.data.id)
+          this.$router.push({ name: 'UserDetail'})
+        }
+      })
+      .catch(err => {
+        if (err.response) {
+          console.log("Falhou");
+          console.log(err.response.status);
+        }
+      });
+    },
+    async goToDetail() {
+      console.log("Im on detail")
     }
   }
 }

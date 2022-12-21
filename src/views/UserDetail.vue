@@ -10,7 +10,7 @@
                 <br>
                 {{ activeText }}
                 <br>
-                Ala: {{ user.instrument }}
+                Ala: {{ instrumentText }}
             </p>
         </div>
          
@@ -28,8 +28,8 @@
 
                 <tbody>
                      <tr v-for="payment in paymentList" :key="payment.id">
-                        <td class="is-vcentered">{{ payment.reference_date }}</td>
-                        <td class="is-vcentered">{{ payment.value }}</td>
+                        <td class="is-vcentered">{{ paymentDateText(payment.date) }}</td>
+                        <td class="is-vcentered">{{ "R$ " + (payment.paymentValue).toFixed(2) }}</td>
                         <td class="is-vcentered width-limit"> {{ payment.observation }} </td>
                         <td class="is-vcentered" v-bind:class="adminVisibility">
                             <button class="button is-small is-outlined is-info m-1" @click="editDidPress(payment)"> Editar </button>
@@ -53,6 +53,7 @@
 <script>
 import Navbar from '../components/Navbar.vue'
 import ConfimationModal from '../components/modal/ConfirmationModal.vue'
+import axios from 'axios'
 
 export default {
     components: { 
@@ -67,8 +68,11 @@ export default {
     },
     data() {
         return {
-            user: {},
-            isAdmin: true,
+            user: {
+                name: "Carregando"
+            },
+            userId: this.$localStorage.get('userid'),
+            isAdmin: false,
             showDialog: false,
             selectedPayment: {},
             paymentList: []
@@ -92,59 +96,112 @@ export default {
         },
         situationClass: function() {
             const situationClassMap = new Map();
-            situationClassMap.set(1, 'has-text-success');
-            situationClassMap.set(2, 'has-text-info');
-            situationClassMap.set(3, 'has-text-warning');
-            situationClassMap.set(4, 'has-text-danger');
+            situationClassMap.set("UP_TO_DATE", 'has-text-success');
+            situationClassMap.set("EXEMPT", 'has-text-info');
+            situationClassMap.set("AGREEMENT", 'has-text-warning');
+            situationClassMap.set("DEBIT", 'has-text-danger');
 
             return situationClassMap.get(this.user.situation)
         },
         situationText: function() {
             const situationTextsMap = new Map();
-            situationTextsMap.set(1, 'Em dia');
-            situationTextsMap.set(2, 'Isento');
-            situationTextsMap.set(3, 'Acordo');
-            situationTextsMap.set(4, 'Débito');
+            situationTextsMap.set("UP_TO_DATE", 'Em dia');
+            situationTextsMap.set("EXEMPT", 'Cota');
+            situationTextsMap.set("AGREEMENT", 'Acordo');
+            situationTextsMap.set("DEBIT", 'Débito');
 
             const resultText = situationTextsMap.get(this.user.situation)
 
             return resultText == null ? 'Indefinido' : resultText
         },
+        instrumentText: function() {
+            const instrumentTextMap = new Map()
+            instrumentTextMap.set("AGBE", 'Agbê');
+            instrumentTextMap.set("AGOGO", 'Agogo');
+            instrumentTextMap.set("GONGUE", 'Gonguê');
+            instrumentTextMap.set("CAIXA", 'Caixa');
+            instrumentTextMap.set("ALFAIA", 'Alfaia');
+            instrumentTextMap.set("CANTO", 'Canto');
+
+            const resultText = instrumentTextMap.get(this.user.instrument)
+
+            return resultText == null ? 'Indefinido' : resultText
+
+        },
         activeText: function() {
+            if (this.user.is_active == null) { return 'Carregando' }
             return this.user.is_active ? 'Membro ativo' : 'Membro afastado'
         },
         associatedText: function() {
+            if (this.user.is_associated == null) { return 'Carregando' }
             return this.user.is_associated ? 'Sócio' : 'Colaborador'
         }
     },
     methods: {
         fetchUser() {
-            if (this.$route.params.id == 3) {
-                this.user = {id: 3, name: 'Bruno Santos Braga Cavalcanti', situation: 1, is_active: false, is_associated: false, instrument: "Gonguê" }
-            } else if (this.$route.params.id == 1) {
-                this.user = {id: 1, name: 'Gabriel Rosa do Nascimento', situation: 4, is_active: true, is_associated: false, instrument: "Caixa" }
-            } else if (this.$route.params.id == 9) {
-                this.user = {id: 9, name: 'Marco Tulio Costa Tenório Cavalcanti', situation: 2, is_active: true, is_associated: true, instrument: "Alfaia" }
-            } else {
-                this.user = {id: 0, name: 'Beatriz Vilalta Jimenez', situation: 3, is_active: true, is_associated: false, instrument: "Agbe" }
-            }
-
+            axios.get('http://localhost:8080/api/user/' + this.userId)
+            .then((response) => {
+                if (response.status >= 200 && response.status <= 299) {
+                    console.log("SUCESSO")
+                    console.log(response)
+                    this.user = {
+                        id: response.data.id, 
+                        name: response.data.name, 
+                        situation: response.data.situation, 
+                        is_active: response.data.active, 
+                        is_associated: response.data.associated, 
+                        instrument: response.data.instrument
+                    }
+                }
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.log("Falhou");
+                    console.log(err.response.status);
+                }
+            });
             this.fetchPaymentsByUser()
         },
         fetchPaymentsByUser() {
-            this.paymentList = [
-                {id: 0, reference_date: 'Nov 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 1, reference_date: 'Out 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 2, reference_date: 'Set 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 3, reference_date: 'Ago 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 4, reference_date: 'Jul 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 5, reference_date: 'Jun 2021', value: 'R$ 15,00', observation: 'Pagou R$ 60,00 correspondente aos anteriores e foi compensado' },
-                {id: 6, reference_date: 'Mai 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 7, reference_date: 'Abr 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 8, reference_date: 'Mar 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 9, reference_date: 'Fev 2021', value: 'R$ 15,00', observation: '-' },
-                {id: 10, reference_date: 'Jan 2021', value: 'R$ 15,00', observation: '-' },
-            ]
+            axios.get('http://localhost:8080/api/payment/user/' + this.userId)
+            .then((response) => {
+                if (response.status >= 200 && response.status <= 299) {
+                    console.log("SUCESSO")
+                    console.log(response)
+                    console.log("PAGAMENTOS ANTES")
+                    console.log(this.paymentList)
+                    this.paymentList = response.data                    
+                    console.log("PAGAMENTOS DEPOIS")                    
+                    console.log(this.paymentList)
+
+                    console.log("PEGANDO DATA PRA CONVERTER")
+                    const payment = this.paymentList[0]
+                    var date3 = new Date(payment.date);
+                    console.log(date3.getUTCMonth() + 1)
+                    console.log(date3.getFullYear())
+                    
+                }
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.log("Falhou");
+                    console.log(err.response.status);
+                }
+            });
+
+            // this.paymentList = [
+            //     {id: 0, reference_date: 'Nov 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 1, reference_date: 'Out 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 2, reference_date: 'Set 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 3, reference_date: 'Ago 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 4, reference_date: 'Jul 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 5, reference_date: 'Jun 2021', value: 'R$ 15,00', observation: 'aos anteriores e foi compensado' },
+            //     {id: 6, reference_date: 'Mai 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 7, reference_date: 'Abr 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 8, reference_date: 'Mar 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 9, reference_date: 'Fev 2021', value: 'R$ 15,00', observation: '-' },
+            //     {id: 10, reference_date: 'Jan 2021', value: 'R$ 15,00', observation: '-' },
+            // ]
         },
         cancelDialog() {
             this.showDialog = false
@@ -160,6 +217,10 @@ export default {
         deleteDidPress(payment) {
             this.selectedPayment = payment
             this.showDialog = true
+        },
+        paymentDateText(dateString) {
+            const paymentDate = new Date(dateString);
+            return (paymentDate.getUTCMonth() + 1) + "/" + (paymentDate.getFullYear())
         }
     }
 }

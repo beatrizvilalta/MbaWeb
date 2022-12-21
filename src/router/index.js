@@ -20,7 +20,7 @@ const routes = [
     component: UserList
   },
   {
-    path: '/userDetail/:id',
+    path: '/userDetail',
     name: 'UserDetail',
     component: UserDetail
   },
@@ -33,6 +33,11 @@ const routes = [
     path: '/paymentForm/:paymentId',
     name: 'EditPayment',
     component: PaymentForm
+  },
+  {
+    path: '/userDetail',
+    name: 'UserDetail',
+    component: UserDetail
   }
 ]
 
