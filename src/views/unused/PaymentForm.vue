@@ -1,6 +1,5 @@
 <template>
 <div class="hero">
-    <Navbar> </Navbar>
     <div class="hero-body p-5">
         <p class= "is-size-3"> {{ title }} </p>
         <div class="columns is-centered">
@@ -31,14 +30,12 @@
 </template>
 <script>
 import DatePicker from 'vue2-datepicker';
-import Navbar from '../components/Navbar.vue'
 import VueNumeric from 'vue-numeric'
 import 'vue2-datepicker/index.css';
 
 export default {
     components: {
         DatePicker,
-        Navbar,
         VueNumeric
     },
     props: {

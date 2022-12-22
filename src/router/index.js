@@ -1,28 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
-import UserList from '../views/UserList'
-import UserDetail from '../views/UserDetail'
-import PaymentForm from '../views/PaymentForm'
+import UserList from '../views/unused/UserList'
+import MemberHome from '../views/MemberHome'
+import PaymentForm from '../views/unused/PaymentForm'
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/',
+    name: 'MemberHome',
+    component: MemberHome
   },
   {
     path: '/userList',
     name: 'UserList',
     component: UserList
-  },
-  {
-    path: '/userDetail',
-    name: 'UserDetail',
-    component: UserDetail
   },
   {
     path: '/paymentForm',
@@ -33,11 +33,6 @@ const routes = [
     path: '/paymentForm/:paymentId',
     name: 'EditPayment',
     component: PaymentForm
-  },
-  {
-    path: '/userDetail',
-    name: 'UserDetail',
-    component: UserDetail
   }
 ]
 

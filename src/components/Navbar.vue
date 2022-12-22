@@ -1,12 +1,12 @@
 <template>
     <nav class="navbar has-shadow is-white" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" @click="goToUserFinance">
-                <h2 id="name"> Finanças </h2>
+            <a class="navbar-item" @click="goToMemberHome">
+                <h2 id="name"> Home </h2>
             </a>
 
-            <a class="navbar-item" @click="goToUserPresenceList">
-                <h2 id="name"> Presenças </h2>
+            <a class="navbar-item" @click="goToEditPassword">
+                <h2 id="name"> Editar senha </h2>
             </a>
 
             <a class="navbar-burger" @click="toggleBurgerMenu">
@@ -41,10 +41,12 @@ export default {
     },
     Data() {
         return {
-            userId: this.$localStorage.get('userid')
+            userId: null
         }
     },
-    created () {},
+    created () {
+        this.userId = this.$localStorage.get('userid')
+    },
     methods: {
         toggleBurgerMenu() {
             document
@@ -52,16 +54,20 @@ export default {
             .classList
             .toggle('is-active')
         },
-        goToUserFinance() {
+        goToMemberHome() {
             if (this.userId != null) {
-                this.$router.push({ name: 'userDetail'});
+                if (this.$route.name != 'MemberHome') {
+                    this.$router.push({ name: 'MemberHome'});
+                }                
             } else {
                 this.logout()
             }
         },
-        goToUserPresenceList() {
+        goToEditPassword() {
             if (this.userId != null) {
-                this.$router.push({ name: 'presenceList'});
+                if (this.$route.name != 'EditPassword') {
+                    this.$router.push({ name: 'EditPassword'});
+                }
             } else {
                 this.logout()
             }

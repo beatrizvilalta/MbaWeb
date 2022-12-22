@@ -30,7 +30,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios'
 
@@ -46,14 +45,12 @@ export default {
     let userID = this.$localStorage.get('userid')
     
     if (userID) {
-      this.$router.push({ name: 'UserDetail'})
+      this.$router.push({ name: 'MemberHome'})
     }
   },
   methods: {
     login() {
       let localStorage = this.$localStorage
-      console.log("request");
-      console.log(this.email);
       axios.post('http://localhost:8080/api/user/signin', {
         email: this.email,
         password: this.password
@@ -61,7 +58,7 @@ export default {
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
           localStorage.set('userid', response.data.id)
-          this.$router.push({ name: 'UserDetail'})
+          this.$router.push({ name: 'MemberHome'})
         }
       })
       .catch(err => {
@@ -70,9 +67,6 @@ export default {
           console.log(err.response.status);
         }
       });
-    },
-    async goToDetail() {
-      console.log("Im on detail")
     }
   }
 }

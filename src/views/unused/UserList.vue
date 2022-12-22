@@ -30,8 +30,8 @@
 
 <script>
 
-import Navbar from '../components/Navbar.vue'
-import UserCard from '../components/cards/UserCard.vue'
+import Navbar from '../../components/Navbar.vue'
+import UserCard from '../../components/cards/UserCard.vue'
 import Dropdown from 'vue-simple-search-dropdown'
 
 export default {
@@ -41,7 +41,6 @@ export default {
       Dropdown
     },
   created () {
-      console.log("Created")
       this.fetchUsers()
   },
   watch: {

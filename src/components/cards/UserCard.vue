@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         selectUser() {
-            this.$router.push({ name: 'UserDetail', params: { id: this.user.id }} );
+            this.$router.push({ name: 'MemberHome', params: { id: this.user.id }} );
         }
     }
 }
