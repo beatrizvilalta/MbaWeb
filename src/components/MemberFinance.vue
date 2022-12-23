@@ -1,36 +1,37 @@
 <template>        
-    <div class="content">
-            <table class="table is-borderless is-striped center mt-4">
-                <thead>
-                    <tr>
-                        <th>Data referência</th>
-                        <th>valor</th>
-                        <th>observações</th>
-                        <th v-bind:class="adminVisibility">Ações</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                     <tr v-for="payment in paymentList" :key="payment.id">
-                        <td class="is-vcentered">{{ paymentDateText(payment.date) }}</td>
-                        <td class="is-vcentered">{{ "R$ " + (payment.paymentValue).toFixed(2) }}</td>
-                        <td class="is-vcentered width-limit"> {{ payment.observation }} </td>
-                        <td class="is-vcentered" v-bind:class="adminVisibility">
-                            <button class="button is-small is-outlined is-info m-1" @click="editDidPress(payment)"> Editar </button>
-                            <button class="button is-small is-outlined is-danger m-1" @click="deleteDidPress(payment)"> Deletar </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>            
-
-            <ConfimationModal :show="showDialog"                
-                title="Delete a task?"
-                :cancelAction="cancelDialog"
-                :deleteAction="confirmDelete"
-                :paymentModel="this.selectedPayment"
-                description="Are you sure you want to delete this task?"
-                v-bind:class="displayDialog"/>
-        </div> 
+    <div class="content">        
+        <table class="table is-borderless is-striped center mt-4">
+            <thead>
+                <tr>
+                    <th>Data referência</th>
+                    <th>valor</th>
+                    <th>observações</th>
+                    <th v-bind:class="adminVisibility">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="payment in paymentList" :key="payment.id">
+                    <td class="is-vcentered">{{ paymentDateText(payment.date) }}</td>
+                    <td class="is-vcentered">{{ "R$ " + (payment.paymentValue).toFixed(2) }}</td>
+                    <td class="is-vcentered width-limit"> {{ payment.observation }} </td>
+                    <td class="is-vcentered" v-bind:class="adminVisibility">
+                        <button class="button is-small is-outlined is-info m-1" @click="editDidPress(payment)"> Editar </button>
+                        <button class="button is-small is-outlined is-danger m-1" @click="deleteDidPress(payment)"> Deletar </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <progress class="progress is-small is-info" max="100" v-bind:class="progressVisibility">50%</progress>
+        
+        <ConfimationModal :show="showDialog"                        
+            title="Delete a task?"        
+            :cancelAction="cancelDialog"        
+            :deleteAction="confirmDelete"        
+            :paymentModel="this.selectedPayment"        
+            description="Are you sure you want to delete this task?"        
+            v-bind:class="displayDialog"/>    
+    </div> 
  </template>
  
  <script>
@@ -43,6 +44,7 @@
     },
     created () {
         if (this.userId) {
+            this.progressVisibility = ''
             this.fetchPayments()
         }
     },
@@ -52,7 +54,8 @@
             isAdmin: false,
             showDialog: false,
             selectedPayment: {},
-            paymentList: []
+            paymentList: [],
+            progressVisibility: 'is-hidden'
         }
     },    
     computed: {
@@ -72,16 +75,17 @@
             ''
         }
     }, 
-    methods: { 
-        fetchPayments() { 
+    methods: {        
+        fetchPayments() {            
             axios.get('http://localhost:8080/api/payment/user/' + this.userId)
             .then((response) => {
                 this.paymentList = this.order(response.data)
+                this.progressVisibility = 'is-hidden'
             })
             .catch(err => {
                 if (err.response) {
-                    console.log("Falhou");
                     console.log(err.response.status);
+                    this.progressVisibility = 'is-hidden'
                 }
             });
         },
@@ -99,7 +103,6 @@
             this.selectedPayment = {}
         },
         confirmDelete() {
-            console.log("Deletou o ")
             console.log(this.selectedPayment)
         },
         editDidPress(payment) {

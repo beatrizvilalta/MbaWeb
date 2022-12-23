@@ -41,7 +41,6 @@ export default {
             })
             .catch(err => {
                 if (err.response) {
-                    console.log("Falhou");
                     console.log(err.response.status);
                 }
             });

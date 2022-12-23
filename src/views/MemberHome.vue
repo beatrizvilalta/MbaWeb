@@ -42,7 +42,7 @@ export default {
         return {
             isAdmin: false,
             financeTabClass: 'is-active',
-            frequencyTabClass: '',
+            frequencyTabClass: ''
         }
     },
     computed: {

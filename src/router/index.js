@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import UserList from '../views/unused/UserList'
 import MemberHome from '../views/MemberHome'
+import EditPassowrd from '../views/EditPassword'
 import PaymentForm from '../views/unused/PaymentForm'
-
 
 Vue.use(VueRouter)
 
@@ -18,6 +18,11 @@ const routes = [
     path: '/',
     name: 'MemberHome',
     component: MemberHome
+  },
+  {
+    path: '/editPassowrd',
+    name: 'EditPassword',
+    component: EditPassowrd
   },
   {
     path: '/userList',

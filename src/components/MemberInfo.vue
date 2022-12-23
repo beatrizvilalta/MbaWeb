@@ -2,7 +2,7 @@
     <div class="mt-4 ml-4 has-text-left">
         <p class="title is-size-5"> {{ user.name }}</p>
         <p class="subtitle mb-2">Situação fiscal: <span class= "has-text-weight-bold" v-bind:class="situationClass"> {{ situationText }} </span> </p>
-        <p >
+        <p>
             {{ associatedText }}
             <br>
             {{ activeText }}
@@ -84,7 +84,6 @@ export default {
             })
             .catch(err => {
                 if (err.response) {
-                    console.log("Falhou");
                     console.log(err.response.status);
                 }
             });     
