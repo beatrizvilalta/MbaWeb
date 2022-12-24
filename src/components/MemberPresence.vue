@@ -11,7 +11,9 @@
             <tbody>
                 <tr v-for="presence in presenceList" :key="presence.id">
                     <td class="is-vcentered">{{ presenceDateText(presence.rehearsalDate) }}</td>
-                    <td class="is-vcentered">{{ presence.type }}</td>    
+                    <td class="is-vcentered">
+                        <img :src="presenceTypeIcon(presence.type)" width="30" height="30"/>
+                    </td>    
                 </tr>
             </tbody>
         </table>            
@@ -50,6 +52,16 @@ export default {
                 return new Date(b.rehearsalDate) - new Date(a.rehearsalDate);
             });
         },
+        presenceTypeIcon(type) {
+            const presenceTypeMap = new Map()
+            presenceTypeMap.set("OBSERVATION", 'https://cdn-icons-png.flaticon.com/512/1041/1041891.png');
+            presenceTypeMap.set("PRESENT", 'https://cdn-icons-png.flaticon.com/512/190/190411.png');
+            presenceTypeMap.set("ABSENT", 'https://cdn-icons-png.flaticon.com/512/190/190406.png');
+
+            const resultIcon = presenceTypeMap.get(type)
+
+            return resultIcon == null ? 'https://cdn-icons-png.flaticon.com/512/953/953738.png' : resultIcon
+        },
         presenceDateText(dateString) {
             const rehearsalDate = new Date(dateString);
             return rehearsalDate.getDate() + "/" + (rehearsalDate.getUTCMonth() + 1) + "/" + rehearsalDate.getUTCFullYear()
@@ -66,3 +78,5 @@ export default {
     margin-top: 1.5em;
 }
 </style>
+
+<!-- <img src=""></img> -->
